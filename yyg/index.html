@@ -9,7 +9,7 @@
         :root {
             --primary-color: #6C5CE7;
             --secondary-color: #FFD700;
-            --text-gradient: linear-gradient(45deg, #FFD700, #6C5CE7);
+            --bg-gradient: linear-gradient(135deg, #2D3436 0%, #6C5CE7 100%);
         }
 
         * {
@@ -22,20 +22,19 @@
             font-family: '微软雅黑', sans-serif;
             color: white;
             line-height: 1.8;
-            overflow-x: hidden;
-            background: linear-gradient(135deg, #2D3436 0%, #6C5CE7 100%);
+            background: var(--bg-gradient);
         }
 
-        /* 动态导航栏 */
+        /* 导航栏 */
         .navbar {
             position: fixed;
             width: 100%;
-            padding: 1.2rem 0;
+            padding: 1rem 0;
             background: rgba(44, 44, 44, 0.97);
             backdrop-filter: blur(12px);
             z-index: 1000;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
         }
 
         .navbar.scrolled {
@@ -53,15 +52,14 @@
         }
 
         .logo {
-            width: 200px;
-            height: 60px;
+            width: 180px;
+            height: 50px;
             background: url('logo.png') center/contain no-repeat;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
         }
 
         .nav-links {
             display: flex;
-            gap: 2.5rem;
+            gap: 2rem;
         }
 
         .nav-links a {
@@ -69,11 +67,10 @@
             text-decoration: none;
             position: relative;
             padding: 0.5rem 0;
-            font-weight: 500;
-            transition: all 0.3s ease-out;
+            transition: 0.3s;
         }
 
-        .nav-links a::before {
+        .nav-links a::after {
             content: '';
             position: absolute;
             bottom: 0;
@@ -81,127 +78,103 @@
             width: 0;
             height: 2px;
             background: var(--secondary-color);
-            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: 0.3s;
         }
 
-        .nav-links a:hover::before {
+        .nav-links a:hover::after {
             width: 100%;
         }
 
-        /* 动态Banner */
+        /* Banner */
         .hero {
             height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
+            text-align: center;
             position: relative;
-            overflow: hidden;
+            background: url('banner.jpg') center/cover;
         }
 
-        .hero::before {
+        .hero::after {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(45deg, rgba(0,0,0,0.7), rgba(108,92,231,0.4));
-            z-index: 1;
-        }
-
-        .hero-video {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            transform: translate(-50%, -50%);
-            opacity: 0.8;
+            background: rgba(0,0,0,0.5);
         }
 
         .hero-content {
             position: relative;
-            z-index: 2;
-            text-align: center;
-            max-width: 800px;
-            padding: 0 2rem;
+            z-index: 1;
         }
 
-        .hero-title {
-            font-size: 4.5rem;
-            margin-bottom: 1.5rem;
-            background-image: var(--text-gradient);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+        /* 作品展示 */
+        .work-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            padding: 4rem 2rem;
         }
 
-        /* 作品展示系统 */
-        .works-section {
-            padding: 8rem 0;
-            position: relative;
+        @media (max-width: 1200px) {
+            .work-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .work-grid { grid-template-columns: repeat(2, 1fr); }
         }
 
         .work-card {
-            background: rgba(255,255,255,0.05);
-            border-radius: 20px;
-            padding: 2rem;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            height: 400px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 15px;
             position: relative;
             overflow: hidden;
-            backdrop-filter: blur(8px);
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        .work-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 50%;
-            height: 100%;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                rgba(255,255,255,0.2),
-                transparent
-            );
-            transition: 0.5s;
-        }
-
-        .work-card:hover::before {
-            left: 100%;
+            transition: 0.3s;
         }
 
         .work-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
         }
 
-        /* 成员展示系统 */
+        .work-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+        }
+
+        /* 成员展示 */
         .member-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 3rem;
-            padding: 0 2rem;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            padding: 4rem 2rem;
+        }
+
+        @media (max-width: 1200px) {
+            .member-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .member-grid { grid-template-columns: repeat(2, 1fr); }
         }
 
         .member-card {
+            height: 350px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 15px;
             position: relative;
-            border-radius: 20px;
             overflow: hidden;
-            transform: scale(0.95);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            opacity: 0;
-        }
-
-        .member-card:hover {
-            transform: scale(1);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: 0.3s;
         }
 
         .member-info {
@@ -210,116 +183,155 @@
             left: 0;
             right: 0;
             padding: 2rem;
-            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            background: rgba(0,0,0,0.7);
             transform: translateY(100%);
-            transition: 0.4s ease-out;
+            transition: 0.3s;
         }
 
         .member-card:hover .member-info {
             transform: translateY(0);
         }
 
-        /* 动画关键帧 */
-        @keyframes textWave {
-            0%, 100% { transform: translateY(0) }
-            50% { transform: translateY(-5px) }
+        /* 底部 */
+        footer {
+            background: rgba(0,0,0,0.9);
+            padding: 4rem 2rem;
+            margin-top: 4rem;
         }
 
-        .show {
-            opacity: 1 !important;
-            transform: translateY(0) !important;
+        .friend-links {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto 3rem;
+        }
+
+        .friend-links a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            text-align: center;
+            padding: 1rem;
+            transition: 0.3s;
+        }
+
+        .friend-links a:hover {
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            opacity: 0.8;
+            margin-top: 2rem;
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(0,0,0,0.9);
+                flex-direction: column;
+                padding: 1rem;
+            }
+
+            .mobile-menu {
+                display: block;
+                font-size: 1.5rem;
+                color: white;
+                cursor: pointer;
+            }
         }
     </style>
 </head>
 <body>
     <nav class="navbar">
         <div class="container">
-            <div class="logo"></div>
+            <a href="#home" class="logo"></a>
             <div class="nav-links">
                 <a href="#works">作品中心</a>
                 <a href="#members">声优团队</a>
-                <a href="#contact">合作联系</a>
+                <a href="#contact">联系我们</a>
                 <a href="#about">关于我们</a>
+            </div>
+            <div class="mobile-menu">
+                <i class="fas fa-bars"></i>
             </div>
         </div>
     </nav>
 
     <section class="hero">
-        <video autoplay muted loop class="hero-video">
-            <source src="banner.mp4" type="video/mp4">
-        </video>
         <div class="hero-content">
-            <h1 class="hero-title" data-scroll>声动山河 · 音绘万象</h1>
-            <p class="hero-subtitle" data-scroll>用声音创造无限可能</p>
+            <h1>声动山河<span>🎙</span>音绘万象</h1>
+            <p>用声音演绎万千世界</p>
         </div>
     </section>
 
-    <section id="works" class="works-section">
-        <div class="container">
-            <h2 class="section-title" data-scroll>精品创作</h2>
-            <div class="work-grid">
-                <!-- 作品卡片 -->
-                <div class="work-card" data-scroll>
-                    <div class="work-media"></div>
+    <section id="works">
+        <h2>代表作品</h2>
+        <div class="work-grid">
+            <div class="work-card" style="background-image: url('work1.jpg')">
+                <div class="work-info">
                     <h3>《山河故人》</h3>
                     <p>古风权谋广播剧</p>
-                    <div class="work-meta">
-                        <span>播放量：152万</span>
-                        <span>评分：9.8</span>
-                    </div>
                 </div>
             </div>
+            <!-- 重复添加更多作品 -->
         </div>
     </section>
 
-    <section id="members" class="members-section">
-        <div class="container">
-            <h2 class="section-title" data-scroll>声优团队</h2>
-            <div class="member-grid">
-                <!-- 成员卡片 -->
-                <div class="member-card" data-scroll>
-                    <img src="member1.jpg" alt="声优墨染">
-                    <div class="member-info">
-                        <h3>墨染</h3>
-                        <p>代表作：《无限流游戏》</p>
-                        <div class="social-links">
-                            <a href="#"><i class="fab fa-bilibili"></i></a>
-                            <a href="#"><i class="fab fa-weibo"></i></a>
-                        </div>
-                    </div>
+    <section id="members">
+        <h2>核心团队</h2>
+        <div class="member-grid">
+            <div class="member-card" style="background-image: url('member1.jpg')">
+                <div class="member-info">
+                    <h3>声优 - 墨染</h3>
+                    <p>代表作：《无限流游戏》</p>
                 </div>
             </div>
+            <!-- 重复添加更多成员 -->
         </div>
     </section>
+
+    <footer>
+        <div class="friend-links">
+            <a href="#">声创联盟</a>
+            <a href="#">729声工场</a>
+            <a href="#">音熊联萌</a>
+            <a href="#">光合积木</a>
+        </div>
+        <div class="copyright">
+            <p>© 2023 御音阁 版权所有</p>
+            <p>京ICP备12345678号-1</p>
+            <p>联系电话：010-66887766</p>
+        </div>
+    </footer>
 
     <script>
-        // 滚动动画控制器
-        const scrollObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if(entry.isIntersecting) {
-                    entry.target.classList.add('show');
-                    if(entry.target.classList.contains('work-card')) {
-                        entry.target.style.transitionDelay = `${entries.indexOf(entry)*0.1}s`;
-                    }
-                }
-            });
-        }, { threshold: 0.15 });
-
-        document.querySelectorAll('[data-scroll]').forEach(el => {
-            scrollObserver.observe(el);
-        });
-
         // 导航栏交互
         window.addEventListener('scroll', () => {
             const navbar = document.querySelector('.navbar');
             navbar.classList.toggle('scrolled', window.scrollY > 100);
         });
 
-        // 视差效果
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            document.querySelector('.hero').style.transform = `translateY(${scrolled * 0.4}px)`;
+        // 移动端菜单
+        document.querySelector('.mobile-menu').addEventListener('click', () => {
+            document.querySelector('.nav-links').classList.toggle('show');
         });
+
+        // 滚动动画
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('section').forEach(section => observer.observe(section));
     </script>
 </body>
 </html>
